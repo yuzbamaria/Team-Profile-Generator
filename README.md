@@ -17,3 +17,6 @@ The generated HTML webpage serves as a visual representation of the input provid
 8. [Questions](#questions)
 9. [Badges](#badges)
 
+## Badges 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
