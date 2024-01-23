@@ -11,7 +11,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 // Importing the render function from the page-template.js file
-const render = require("./src/page-template.js");
+const render = require("./src/pageTemplate.js");
 
 // Mock data representing results from inquirer queries for Engineer, Intern, and Manager
 const engineer = { name: 'engineer', email: 'engineer@engineer.com', id: 1, github: 'enginner' };
@@ -31,6 +31,37 @@ team.push(managerClass);
 // Rendering HTML for each employee class and logging their roles
 const html = render(team);
 console.log(html);
+
+async function writeToFile(fileName, data) {
+    // try-catch statement for handling errors
+    try {
+        // Step 1: Create the full path to the file
+        // Ensure the correct working directory is used when constructing the full path
+        // path.join() takes one or more path segments as arguments and joins them together
+        // __dirname represents the directory name of the current module
+        const fullPath = path.join(__dirname, fileName);
+
+        // Step 2: Asynchronously write data to the file
+        await fs.promises.writeFile(fullPath, data);
+
+        // Step 3: Log a success message if writing is successful
+        console.log(`File "${fullPath}" written successfully.`);
+
+    } catch (error) {
+        // Step 4: Handle errors if any occur during the process
+        console.error(`Error writing file: ${error.message}`);
+    }
+}
+
+// function to initialize program
+function init() {
+    const fileName = "team.html";
+    writeToFile(fileName, html);
+    console.log("Creating Team HTML File...");
+    }
+
+// function call to initialize program
+init();
 
 
 
