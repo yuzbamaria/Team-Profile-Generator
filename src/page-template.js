@@ -1,4 +1,5 @@
 // creates the team
+// function generates the HTML content for each team member based on their role
 const generateTeam = team => {
 
     // creates the manager html
@@ -57,13 +58,20 @@ const generateTeam = team => {
 </div>
         `;
     };
-
+    // Array stores the generated HTML for each team member
     const html = [];
 
+    // Pushes manager HTML to the array
+    // .filter() filters the team array by selecting only those team members whose role is "Manager"
+    // .map() transforms each element of the filtered array by calling
+    // the generateManager function for each team member with the role "Manager."
     html.push(team
         .filter(employee => employee.getRole() === "Manager")
         .map(manager => generateManager(manager))
     );
+    // .join("") is used to concatenate the array of HTML strings into a single string. 
+    // The map function returns an array of HTML strings (one for each engineer), 
+    // and join("") joins these strings together without any separator.
     html.push(team
         .filter(employee => employee.getRole() === "Engineer")
         .map(engineer => generateEngineer(engineer))
