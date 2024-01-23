@@ -6,27 +6,82 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-// Setting up the output directory and file path for the generated HTML
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
-
 // Importing the render function from the page-template.js file
 const render = require("./src/pageTemplate.js");
 
-// Mock data representing results from inquirer queries for Engineer, Intern, and Manager
-const engineer = { name: 'engineer', email: 'engineer@engineer.com', id: 1, github: 'enginner' };
-const intern = { name: 'intern', email: 'intern@intern.com', id: 2, github: 'intern' };
-const manager = { name: 'manager', email: 'manager@manager.com', id: 3, github: 'manager' };
-
-// Creating instances of the Employee subclasses (Engineer, Intern, Manager)
-const engineerClass = new Engineer(engineer.name, engineer.id, engineer.email, engineer.github);
-const internClass = new Intern(intern.name, intern.id, intern.email, intern.github);
-const managerClass  = new Manager(manager.name, manager.id, manager.email, manager.github);
-
 let team = [];
-team.push(engineerClass);
-team.push(internClass);
-team.push(managerClass);
+
+// Define questions for manager
+const managerQuestions = [
+  {
+    type: "input",
+    name: "name",
+    message: "Enter the manager's name:",
+  },
+  {
+    type: "input",
+    name: "id",
+    message: "Enter the manager's ID:",
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "Enter the manager's email:",
+  },
+  {
+    type: "input",
+    name: "officeNumber",
+    message: "Enter the manager's office number:",
+  },
+];
+
+// Define questions for engineer
+const engineerQuestions = [
+    {
+        type: "input",
+        name: "name",
+        message: "Enter the engineer's name:",
+      },
+      {
+        type: "input",
+        name: "id",
+        message: "Enter the engineer's ID:",
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "Enter the engineer's email:",
+      },
+      {
+        type: "input",
+        name: "github",
+        message: "Enter the engineer's github:",
+      },
+];
+
+// Define questions for intern
+const internQuestions = [
+    {
+        type: "input",
+        name: "name",
+        message: "Enter the intern's name:",
+      },
+      {
+        type: "input",
+        name: "id",
+        message: "Enter the intern's ID:",
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "Enter the intern's email:",
+      },
+      {
+        type: "input",
+        name: "school",
+        message: "Enter the intern's school:",
+      },
+];
 
 // Rendering HTML for each employee class and logging their roles
 const html = render(team);
@@ -38,7 +93,7 @@ async function writeToFile(fileName, data) {
         // Step 1: Create the full path to the file
         // Ensure the correct working directory is used when constructing the full path
         // path.join() takes one or more path segments as arguments and joins them together
-        // __dirname represents the directory name of the current module
+        // `output` represents the directory name of the current module
         const fullPath = path.join(__dirname, fileName);
 
         // Step 2: Asynchronously write data to the file
@@ -53,26 +108,39 @@ async function writeToFile(fileName, data) {
     }
 }
 
+// Setting up the output directory and file path for the generated HTML
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
+
 // function to initialize program
-function init() {
-    const fileName = "team.html";
-    writeToFile(fileName, html);
+async function init() {
+    // Prompt user for manager details
+    const managerResponses = await inquirer.prompt(managerQuestions);
+    const manager = new Manager(managerResponses.name, managerResponses.id, managerResponses.email, managerResponses.officeNumber);
+    team.push(manager);
+
+    // Prompt user for engineer details (you can repeat this for each engineer)
+    const engineerResponses = await inquirer.prompt(engineerQuestions);
+    const engineer = new Engineer(engineerResponses.name, engineerResponses.id, engineerResponses.email, engineerResponses.github);
+    team.push(engineer);
+
+    // Prompt user for intern details (you can repeat this for each intern)
+    const internResponses = await inquirer.prompt(internQuestions);
+    const intern = new Intern(internResponses.name, internResponses.id, internResponses.email, internResponses.school);
+    team.push(intern);
+
+    // Render the HTML content based on the team array
+    const html = render(team);
+
+    // Specify the output file name
+    // outputPath = "team.html";
+
+    // Write the HTML content to a file
+    await writeToFile(outputPath, html);
     console.log("Creating Team HTML File...");
-    }
+}
 
 // function call to initialize program
 init();
 
 
-
-
-// console.log(engineerClass.getRole());
-
-
-// TODO: Write Code to gather information about the development team members, and render the HTML file.
-// Steps 
-// 1. npm init -y – to initialise package.json file
-// 2. npm i inquirer@6.3.1 - to install inquirer
-// 3. npm i jest 
-// 4. uptade the file package-json line 10 to: "test": "jest"
-// 5. create a file .gitignore and write in it: node_modules
