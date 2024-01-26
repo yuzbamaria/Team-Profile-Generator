@@ -53,6 +53,7 @@ Once the team is complete, the data is written to the output folder, and the use
 3. Execute the command npm install to install the necessary npm packages.
 
 ## Screenshots
+![screenshot-team-profile-generator](eam_profile_generator/images/team.html.png)
 
 ## Tests 
 Use ```npm run test``` to run Jest for tests on constructors.
