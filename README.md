@@ -30,7 +30,7 @@ To initiate the app via the command line, navigate to the main directory of the 
  -  employee ID
  -  email address
  -  office number
-   
+  
 Then, the user is presented with options to add either an Engineer or an Intern, or to finish the team profile.
 
 When adding an Engineer, the user is asked for:
