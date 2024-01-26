@@ -32,15 +32,6 @@ To initiate the app via the command line, navigate to the main directory of the 
     </code>
 </pre>
 
-<button id="copyButton" data-clipboard-target="#copyCommand">
-    Copy to Clipboard
-</button>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        new ClipboardJS('#copyButton');
-    });
-</script>
 
 
 ## Installation
