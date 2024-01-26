@@ -25,14 +25,7 @@ The generated HTML webpage serves as a visual representation of the input provid
 
 ## Usage
 To initiate the app via the command line, navigate to the main directory of the project and run:
-
-<pre>
-    <code id="copyCommand">
-        node index.js
-    </code>
-</pre>
-
-
+<pre> <code id="copyCommand"> node index.js </code> </pre>
 
 ## Installation
 
