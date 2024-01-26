@@ -17,92 +17,110 @@ const managerQuestions = [
     type: "input",
     name: "name",
     message: "Enter the manager's name:",
-    default: "Manager"
+    default: "Manager", 
+    validate: (input) => !!input.trim() || "Name cannot be empty",
   },
   {
     type: "input",
     name: "id",
     message: "Enter the manager's ID:",
-    default: "1"
+    default: "1",
+    validate: (input) => (!isNaN(input) && input.trim() !== "") || "ID must be a number",
   },
   {
     type: "input",
     name: "email",
     message: "Enter the manager's email:",
-    default: "manager@manager.com"
+    default: "manager@manager.com",
+    validate: (input) =>
+    /\S+@\S+\.\S+/.test(input) || "Invalid email format",
   },
   {
     type: "input",
     name: "officeNumber",
     message: "Enter the manager's office number:",
-    default: "11"
+    default: "11",
+    validate: (input) =>
+      (!isNaN(input) && input.trim() !== "") || "Office number must be a number",
   },
 ];
 
 // Define options 
 const options = [
   {
-      type: 'list',
-      name: 'options',
-      message: 'How would you like to procees?',
-      choices: ['Add an engineer', 'Add an intern', 'Finish building the team'],
+    type: 'list',
+    name: 'options',
+    message: 'How would you like to procees?',
+    choices: ['Add an engineer', 'Add an intern', 'Finish building the team'],
   }
 ]
 
 // Define questions for engineer
 const engineerQuestions = [
-    {
-        type: "input",
-        name: "name",
-        message: "Enter the engineer's name:",
-        default: "Engineer"
-      },
-      {
-        type: "input",
-        name: "id",
-        message: "Enter the engineer's ID:",
-        default: "2"
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "Enter the engineer's email:",
-        default: "engineer@gmail.com"
-      },
-      {
-        type: "input",
-        name: "github",
-        message: "Enter the engineer's github:",
-        default: "https://github.com/engineer"
-      },
+  {
+    type: "input",
+    name: "name",
+    message: "Enter the engineer's name:",
+    default: "Engineer",
+    validate: (input) => !!input.trim() || "Name cannot be empty",
+  },
+  {
+    type: "input",
+    name: "id",
+    message: "Enter the engineer's ID:",
+    default: "2",
+    validate: (input) => (!isNaN(input) && input.trim() !== "") || "ID must be a number",
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "Enter the engineer's email:",
+    default: "engineer@gmail.com",
+    validate: (input) =>
+      /\S+@\S+\.\S+/.test(input) || "Invalid email format",
+  },
+  {
+    type: "input",
+    name: "github",
+    message: "Enter the engineer's github:",
+    default: "https://github.com/engineer",
+    validate: (input) =>
+      input.startsWith("https://github.com/") ||
+      "Invalid GitHub URL format",
+  },
 ];
 
 // Define questions for intern
 const internQuestions = [
-    {
-        type: "input",
-        name: "name",
-        message: "Enter the intern's name:",
-        default: "Intern"
-      },
-      {
-        type: "input",
-        name: "id",
-        message: "Enter the intern's ID:",
-        default: "3"
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "Enter the intern's email:",
-        default: "intern@gmail.com"
-      },
-      {
-        type: "input",
-        name: "school",
-        message: "Enter the intern's school:",
-        default: "local school"
-      },
+  {
+    type: "input",
+    name: "name",
+    message: "Enter the intern's name:",
+    default: "Intern",
+    validate: (input) => !!input.trim() || "Name cannot be empty",
+  },
+  {
+    type: "input",
+    name: "id",
+    message: "Enter the intern's ID:",
+    default: "3",
+    validate: (input) => (!isNaN(input) && input.trim() !== "") || "ID must be a number",
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "Enter the intern's email:",
+    default: "intern@gmail.com",
+    validate: (input) =>
+      /\S+@\S+\.\S+/.test(input) || "Invalid email format",
+  },
+  {
+    type: "input",
+    name: "school",
+    message: "Enter the intern's school:",
+    default: "local school",
+    validate: (input) => !!input.trim() || "School cannot be empty",
+  },
 ];
 
 // Rendering HTML for each employee class and logging their roles
@@ -113,21 +131,21 @@ let OUTPUT_DIR;
 let outputPath;
 
 async function writeToFile(data) {
-    // try-catch statement for handling errors
-    try {
-        OUTPUT_DIR = path.resolve(__dirname, "output");
-        outputPath = path.join(OUTPUT_DIR, "team.html");
-        // Step 2: Asynchronously write data to the file
-        // await fs.promises.writeFile('./output/team.html', data);
-        await fs.promises.writeFile(outputPath, data);
+  // try-catch statement for handling errors
+  try {
+    OUTPUT_DIR = path.resolve(__dirname, "output");
+    outputPath = path.join(OUTPUT_DIR, "team.html");
+    // Step 2: Asynchronously write data to the file
+    // await fs.promises.writeFile('./output/team.html', data);
+    await fs.promises.writeFile(outputPath, data);
 
-        // Step 3: Log a success message if writing is successful
-        console.log(`File "${outputPath}" written successfully.`);
+    // Step 3: Log a success message if writing is successful
+    console.log(`File "${outputPath}" written successfully.`);
 
-    } catch (error) {
-        // Step 4: Handle errors if any occur during the process
-        console.error(`Error writing file: ${error.message}`);
-    }
+  } catch (error) {
+    // Step 4: Handle errors if any occur during the process
+    console.error(`Error writing file: ${error.message}`);
+  }
 }
 
 // Function to handle the user's selection
@@ -148,7 +166,7 @@ async function handleOptionSelection(option) {
     await writeToFile(html);
     console.log("Creating Team HTML File...");
     // Optional: exit the program after finishing
-    process.exit(); 
+    process.exit();
   }
 }
 
