@@ -13,10 +13,8 @@ The generated HTML webpage serves as a visual representation of the input provid
 2. [Usage](#usage)
 3. [Installation](#installation)
 4. [Tests](#tests)
-5. [Technologies](#technologies) 
-6. [License](#license)
-7. [Questions](#questions)
-8. [Badges](#badges)
+5. [License](#license)
+6. [Questions](#questions)
 
 ## User story
 - As a manager a user wants to generate a webpage
@@ -27,18 +25,40 @@ The generated HTML webpage serves as a visual representation of the input provid
 To initiate the app via the command line, navigate to the main directory of the project and run:
 <pre> <code id="copyCommand"> node index.js </code> </pre>
 
+ The application starts by requesting the user to provide details for the Manager:
+ -  name
+ -  employee ID
+ -  email address
+ -  office number
+Then, the user is presented with options to add either an Engineer or an Intern, or to finish the team profile.
+
+When adding an Engineer, the user is asked for:
+- Engineer's name
+- email address
+- employee ID
+- Github username
+
+When an Intern is being added, the user is prompted for: 
+- Intern's name
+- email address
+- employee ID
+- school
+
+Once the team is complete, the data is written to the output folder, and the user can view their finalized team creation in team.html
+
 ## Installation
+1. Fork, download or clone the repository to your local machine.
+2. Ensure you have Node.js installed as it is a prerequisite for running the application.
+3. Execute the command npm install to install the necessary npm packages.
 
 ## Screenshots
 
 ## Tests 
-
-## Technologies 
+Use ```npm run test``` to run Jest for tests on constructors.
 
 ## License 
+This project is licensed under the terms of the MIT license.
 
 ## Questions 
 
-## Badges 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
