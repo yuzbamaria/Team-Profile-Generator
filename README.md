@@ -10,19 +10,51 @@ The generated HTML webpage serves as a visual representation of the input provid
 
 ## Table of contents
 1. [User story](#user_story)
-2. [Acceptance Criteria](#acceptance_criteria)
-3. [Usage](#usage)
-4. [Installation](#installation)
-5. [Tests](#tests)
-6. [Technologies](#technologies) 
-7. [License](#license)
-8. [Questions](#questions)
-9. [Badges](#badges)
+2. [Usage](#usage)
+3. [Installation](#installation)
+4. [Tests](#tests)
+5. [Technologies](#technologies) 
+6. [License](#license)
+7. [Questions](#questions)
+8. [Badges](#badges)
 
 ## User story
 - As a manager a user wants to generate a webpage
 - that displays my team's basic info
 - so that a user have quick access to their emails and GitHub profiles.
+
+## Usage
+To initiate the app via the command line, navigate to the main directory of the project and run: 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+
+<pre>
+    <code id="copyCommand">
+        node index.js
+    </code>
+</pre>
+
+<button id="copyButton" data-clipboard-target="#copyCommand">
+    Copy to Clipboard
+</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        new ClipboardJS('#copyButton');
+    });
+</script>
+
+
+## Installation
+
+## Screenshots
+
+## Tests 
+
+## Technologies 
+
+## License 
+
+## Questions 
 
 ## Badges 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
