@@ -17,23 +17,37 @@ const managerQuestions = [
     type: "input",
     name: "name",
     message: "Enter the manager's name:",
+    default: "Manager"
   },
   {
     type: "input",
     name: "id",
     message: "Enter the manager's ID:",
+    default: "1"
   },
   {
     type: "input",
     name: "email",
     message: "Enter the manager's email:",
+    default: "manager@manager.com"
   },
   {
     type: "input",
     name: "officeNumber",
     message: "Enter the manager's office number:",
+    default: "11"
   },
 ];
+
+// Define options 
+const options = [
+  {
+      type: 'list',
+      name: 'options',
+      message: 'How would you like to procees?',
+      choices: ['Add an engineer', 'Add an intern', 'Finish building the team'],
+  }
+]
 
 // Define questions for engineer
 const engineerQuestions = [
@@ -41,21 +55,25 @@ const engineerQuestions = [
         type: "input",
         name: "name",
         message: "Enter the engineer's name:",
+        default: "Engineer"
       },
       {
         type: "input",
         name: "id",
         message: "Enter the engineer's ID:",
+        default: "2"
       },
       {
         type: "input",
         name: "email",
         message: "Enter the engineer's email:",
+        default: "engineer@gmail.com"
       },
       {
         type: "input",
         name: "github",
         message: "Enter the engineer's github:",
+        default: "https://github.com/engineer"
       },
 ];
 
@@ -65,21 +83,25 @@ const internQuestions = [
         type: "input",
         name: "name",
         message: "Enter the intern's name:",
+        default: "Intern"
       },
       {
         type: "input",
         name: "id",
         message: "Enter the intern's ID:",
+        default: "3"
       },
       {
         type: "input",
         name: "email",
         message: "Enter the intern's email:",
+        default: "intern@gmail.com"
       },
       {
         type: "input",
         name: "school",
         message: "Enter the intern's school:",
+        default: "local school"
       },
 ];
 
@@ -87,20 +109,20 @@ const internQuestions = [
 const html = render(team);
 console.log(html);
 
-async function writeToFile(fileName, data) {
+let OUTPUT_DIR;
+let outputPath;
+
+async function writeToFile(data) {
     // try-catch statement for handling errors
     try {
-        // Step 1: Create the full path to the file
-        // Ensure the correct working directory is used when constructing the full path
-        // path.join() takes one or more path segments as arguments and joins them together
-        // `output` represents the directory name of the current module
-        const fullPath = path.join(__dirname, fileName);
-
+        OUTPUT_DIR = path.resolve(__dirname, "output");
+        outputPath = path.join(OUTPUT_DIR, "team.html");
         // Step 2: Asynchronously write data to the file
-        await fs.promises.writeFile(fullPath, data);
+        // await fs.promises.writeFile('./output/team.html', data);
+        await fs.promises.writeFile(outputPath, data);
 
         // Step 3: Log a success message if writing is successful
-        console.log(`File "${fullPath}" written successfully.`);
+        console.log(`File "${outputPath}" written successfully.`);
 
     } catch (error) {
         // Step 4: Handle errors if any occur during the process
@@ -108,39 +130,90 @@ async function writeToFile(fileName, data) {
     }
 }
 
-// Setting up the output directory and file path for the generated HTML
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
-
-// function to initialize program
-async function init() {
-    // Prompt user for manager details
-    const managerResponses = await inquirer.prompt(managerQuestions);
-    const manager = new Manager(managerResponses.name, managerResponses.id, managerResponses.email, managerResponses.officeNumber);
-    team.push(manager);
-
-    // Prompt user for engineer details (you can repeat this for each engineer)
+// Function to handle the user's selection
+async function handleOptionSelection(option) {
+  if (option === 'Add an engineer') {
+    // Prompt user for engineer details
     const engineerResponses = await inquirer.prompt(engineerQuestions);
     const engineer = new Engineer(engineerResponses.name, engineerResponses.id, engineerResponses.email, engineerResponses.github);
     team.push(engineer);
-
-    // Prompt user for intern details (you can repeat this for each intern)
+  } else if (option === 'Add an intern') {
+    // Prompt user for intern details
     const internResponses = await inquirer.prompt(internQuestions);
     const intern = new Intern(internResponses.name, internResponses.id, internResponses.email, internResponses.school);
     team.push(intern);
-
-    // Render the HTML content based on the team array
+  } else if (option === 'Finish building the team') {
+    // Handle finishing the team building process (e.g., render and write to file)
     const html = render(team);
-
-    // Specify the output file name
-    // outputPath = "team.html";
-
-    // Write the HTML content to a file
-    await writeToFile(outputPath, html);
+    await writeToFile(html);
     console.log("Creating Team HTML File...");
+    // Optional: exit the program after finishing
+    process.exit(); 
+  }
 }
 
-// function call to initialize program
+// Function to initialize program
+async function init() {
+  // Prompt user for manager details
+  const managerResponses = await inquirer.prompt(managerQuestions);
+  const manager = new Manager(managerResponses.name, managerResponses.id, managerResponses.email, managerResponses.officeNumber);
+  team.push(manager);
+
+  while (true) {
+    // Prompt user for options after answering manager questions or completing previous actions
+    const optionResponses = await inquirer.prompt(options);
+    const nextAction = optionResponses.options;
+
+    // Handle the selected option
+    await handleOptionSelection(nextAction);
+  }
+}
+
+// Function call to initialize program
 init();
+// function to initialize program
+// async function init() {
+//     // Prompt user for manager details
+//     const managerResponses = await inquirer.prompt(managerQuestions);
+//     const manager = new Manager(managerResponses.name, managerResponses.id, managerResponses.email, managerResponses.officeNumber);
+//     team.push(manager);
+
+//     // Continue prompting user based on their selected actions
+//       // Prompt user for options after answering manager questions
+//       const optionResponses = await inquirer.prompt(options);
+//       nextAction = optionResponses.options;
+      
+//       if (nextAction === 'Add an engineer') {
+//         // Prompt user for engineer details (you can repeat this for each engineer)
+//         const engineerResponses = await inquirer.prompt(engineerQuestions);
+//         const engineer = new Engineer(engineerResponses.name, engineerResponses.id, engineerResponses.email, engineerResponses.github);
+//         team.push(engineer);
+//       } else if (nextAction === 'Add an intern') {
+//         // Prompt user for intern details (you can repeat this for each intern)
+//         const internResponses = await inquirer.prompt(internQuestions);
+//         const intern = new Intern(internResponses.name, internResponses.id, internResponses.email, internResponses.school);
+//         team.push(intern);
+//       } else {
+//         (nextAction !== 'Finish building the team');
+        
+//       }
+//     console.log(optionResponses.nextAction);
+
+//     // Render the HTML content based on the team array
+//     const html = render(team);
+
+//     // Specify the output file name
+//     // outputPath = "team.html";
+
+//     // Write the HTML content to a file
+//     await writeToFile(outputPath, html);
+//     console.log("Creating Team HTML File...");
+// }
+
+// // function call to initialize program
+// init();
+
+// // validation 
+// // check readme 
 
 
