@@ -61,5 +61,6 @@ Use ```npm run test``` to run Jest for tests on constructors.
 This project is licensed under the terms of the MIT license.
 
 ## Questions 
+If you have any questions about the repo, open an issue or contact me directly at here [here](mailto:yuzba.maria@gmail.com). You can find more of my work at [github/yuzbamaria](https://github.com/yuzbamaria)https://github.com/yuzbamaria.
 
 
